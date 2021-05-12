@@ -1,0 +1,248 @@
+.subfolder {
+	color:black;
+	
+}
+
+.border{
+	border-radius:10%;
+	padding-top:2em;
+}
+
+.shadowX {
+	box-shadow: 0 1px 4px rgba(0, 0, 0, .3), -23px 0 20px -23px rgba(0, 0, 0, .6), 23px 0 20px -23px rgba(0, 0, 0, .6), inset 0 0 40px rgba(0, 0, 0, .1); 
+}
+	
+.text-shadowX{
+  color: #444444;
+  background: #FFFFFF;
+  text-shadow: 1px 0px 1px #CCCCCC, 0px 1px 1px #EEEEEE, 2px 1px 1px #CCCCCC, 1px 2px 1px #EEEEEE, 3px 2px 1px #CCCCCC, 2px 3px 1px #EEEEEE, 4px 3px 1px #CCCCCC, 3px 4px 1px #EEEEEE, 5px 4px 1px #CCCCCC, 4px 5px 1px #EEEEEE, 6px 5px 1px #CCCCCC, 5px 6px 1px #EEEEEE, 7px 6px 1px #CCCCCC;
+}
+
+.lavender {
+	background:lavender;
+}
+
+/* NOT USED */
+.container-background{  /*back-image*/
+	background: url("http://localhost/kernel/web/images/kernel.jpg");
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0.09;
+	background-size: 200px 50px; 
+	padding-left: 14em; margin-bottom: 44em;
+	background-repeat:space;
+}
+
+/* Navbar css options */
+.navbar {}
+
+
+
+
+/* round icon with quantity of tickets in cookie */
+.badge1[data-badge]:after {
+   content:attr(data-badge);
+   position:absolute;
+   top:-10px;
+   right:-1px; /* -10 */
+   font-size:.9em;
+   background:red;
+   color:white;
+   width:20px;height:20px;
+   text-align:center;
+   line-height:16px;
+   border-radius:50%;
+   box-shadow:0 0 1px #333;
+   padding: .3em;
+}
+
+
+.balance{
+	margin-left:0.6em;
+}
+
+/* Cursor for messages */
+.cursorX{
+	cursor: pointer;	
+}
+
+.cursorX:hover {
+	background: #ddd; /*#f2f2f2;*/
+    /*opacity:0.9;*/
+}
+
+/* break words */
+.word-breakX {
+	word-wrap: break-word;
+}
+
+/* Colors Css for messages, requests, etc */
+.header-color {
+ background-color: #4CAF50;
+  color: white;
+}
+.evenX {
+ background-color:#f2f2f2; /* #e6e6e6 #f2f2f2;*/
+}
+
+/* for unread emails */
+.boldX{
+	font-weight: bold; 
+	/*text-shadow: #FC0 2px 0 10px;*/
+}
+
+/* main account fa-fa icons*/
+.icon-x{
+	font-size: 196px;  color:red;
+}
+
+/* ---------------------------------------- Mobile */
+@media screen and (max-width: 480px) { 
+    .mobile-padding{
+		margin-bottom:1em;
+    }
+}
+
+
+
+
+
+
+
+/* PURE CSS LOADER, no code in index.php, just in loader.js -----------------------------------------------*/
+/* LOADER, we make body hidden by default, gets visible in 2 sec in JS */
+/* Center the loader */
+#loaderX {
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  z-index: 1;
+  width: 250px;
+  height: 250px;
+  margin: -75px 0 0 -75px;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  border-bottom: 16px solid #3498db;
+  /* border-right: 16px solid red;*/
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Add animation to "page content" to appear smoothly from bottom */
+.animate-bottom {
+  position: relative;
+  -webkit-animation-name: animatebottom;
+  -webkit-animation-duration: 1s;
+  animation-name: animatebottom;
+  animation-duration: 2s
+}
+
+@-webkit-keyframes animatebottom {
+  from { bottom:-100px; opacity:0 } 
+  to { bottom:0px; opacity:1 }
+}
+
+@keyframes animatebottom { 
+  from{ bottom:-100px; opacity:0 } 
+  to{ bottom:0; opacity:1 }
+}
+
+/* --  body id to hide firstly -- */
+#all{
+  display: none; 
+}
+
+ /* END  LOADER, we make body hidden by default, gets visible in 2 sec in JS */
+ /* END PURE CSS LOADER, no code in index.php, just in loader.js*/
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ /* --------------- if iPad Portrait do collapse navbar menu always -------------------------*/
+@media screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait) {
+ 
+ /*@media (min-width: 868px){*/
+        .navbar-nav .open .dropdown-menu {
+            position: static;
+            float: none;
+            width: auto;
+            margin-top: 0;
+            background-color: transparent;
+            border: 0;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+        .navbar-nav .open .dropdown-menu > li > a {
+            line-height: 20px;
+        }
+        .navbar-nav .open .dropdown-menu > li > a,
+        .navbar-nav .open .dropdown-menu .dropdown-header {
+            padding: 5px 15px 5px 25px;
+        }
+        .dropdown-menu > li > a {
+            display: block;
+            padding: 3px 20px;
+            clear: both;
+            font-weight: normal;
+            line-height: 1.42857143;
+            color: #333;
+            white-space: nowrap;
+        }
+        .navbar-header {
+            float: none;
+        }
+        .navbar-toggle {
+            display: block;
+        }
+        .navbar-collapse {
+            border-top: 1px solid transparent;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+        }
+        .navbar-collapse.collapse {
+            display: none!important;
+        }
+        .navbar-nav {
+            float: none!important;
+            /*margin: 7.5px -15px;*/
+            margin: 7.5px 50px 7.5px -15px
+        }
+        .navbar-nav>li {
+            float: none;
+        }
+        .navbar-nav>li>a {
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        .navbar-text {
+            float: none;
+            margin: 15px 0;
+        }
+        /* since 3.1.0 */
+        .navbar-collapse.collapse.in { 
+            display: block!important;
+        }
+        .collapsing {
+            overflow: hidden!important;
+        }
+   /* } */
+}

@@ -1,0 +1,135 @@
+/*------ My CSS for LiqPay Shop {Simple} front Page (page with all goods)-------------*/
+
+
+/* Badge CSS => round icon with quantity of tickets in cookie */
+.badge1[data-badge]:after {
+   content:attr(data-badge);
+   position:absolute;
+   top:-10px;
+   right:8.2em; /* -10 */
+   font-size:.9em;
+   background:red;
+   color:white;
+   width:20px;height:20px;
+   text-align:center;
+   line-height:16px;
+   border-radius:50%;
+   box-shadow:0 0 1px #333;
+   padding: .3em;
+}
+
+
+
+/* ---------------------------------------- Mobile */
+@media screen and (max-width: 480px) { 
+   .badge1[data-badge]:after { right:-0.8em;}
+   .badge1 {right:2em;}
+   
+}
+/* ---------------------------------------- Mobile */
+
+
+
+
+.item-quantity{text-align: center;} /* font of quantity */
+
+
+
+
+
+
+/* --- CSS for Timeline \app\componentsX\views_components\LiqPay\ShopTimelineProgress::showProgress("Cart"); -------*/
+
+/* current inactive icon */
+.myinactive, .myinactive p, .myinactive a{
+	color:  #acac86;}
+
+/* current active icon */
+.myactive, .myactive p, .myactive a{ 
+    color:black; font-weight:bold; }
+	
+/* lines between icons in variant 1 */
+.line2{
+       display: block;
+       height: 1px;
+       border: 0;
+       border-top: 1px solid #ccc;
+       margin: 1em 0;
+       padding: 0;
+}
+
+
+/* Divs with icons and lines */
+.icon-item{display: inline-block; width: 9%;}
+
+.items-list:after { clear: both;}
+
+
+/* ---------------------------------------- Mobile */
+@media screen and (max-width: 480px) { 
+ .line {width: 1.1em;}  /* lines between icons */
+ .iconz p{font-size:0.7em;}
+ 
+ .icon-item{display: inline-block; width: 8%;}
+ .icon-item p{font-size:0.7em;}
+}
+
+/* ---------------------   END CSS for Timeline \app\componentsX\views_components\LiqPay\ShopTimelineProgress::showProgress("Cart"); -------*/
+
+
+
+
+
+
+
+
+
+/* Cursor for products */
+.cursorX{
+	cursor: pointer;	
+}
+
+.cursorX:hover {
+	background: #ddd; /*#f2f2f2;*/
+    /*opacity:0.9;*/
+}
+
+/* break words */
+.word-breakX {
+	word-wrap: break-word;
+}
+
+/* my shop image*/
+.my-one {width:90%;}
+.my-one-modal{width:60%;}
+
+.my-one-2{width:6%;} /* image in views/pay-page.blade.php */
+
+
+/* ---------------------------------------- Mobile */
+@media screen and (max-width: 480px) { 
+    .my-one {width:100%;} /* my shop image*/
+	.my-one-2{width:10%;} /* image in views/pay-page.blade.php */
+}
+ 
+ 
+ 
+ 
+ 
+/* ---- Shadow CSS */
+.shadowX, #txtMsg{
+	box-shadow: 0 1px 4px rgba(0, 0, 0, .3),
+            -23px 0 20px -23px rgba(0, 0, 0, .6),
+            23px 0 20px -23px rgba(0, 0, 0, .6),
+            inset 0 0 40px rgba(0, 0, 0, .1);
+}
+
+
+/*  MEGA FIX FOR {Bootstrap modal appearing under background} */
+.modal-backdrop {
+  z-index: -1;
+}
+
+.no-product{margin:1em 0em; background:red; padding:0.4em; }
+
+.small-x {font-size: 0.5em;}

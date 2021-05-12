@@ -1,0 +1,17 @@
+
+/* stretch the width of div with orders table over the page visibility */
+.fit-content { 
+    width:100em;
+	overflow-x: scroll;
+}
+
+
+
+/* -------------------------------- Mobile */
+@media screen and (max-width: 480px) { 
+    .fit-content { width: fit-content;}  /*DO NOT stretch the width of div with orders table over the page visibility  */
+}
+ 
+ .border{border: 1px solid black; padding:0.2em;}
+ 
+ .hidden{dispaly:none;}

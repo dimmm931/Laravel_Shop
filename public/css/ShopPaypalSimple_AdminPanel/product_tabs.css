@@ -1,0 +1,54 @@
+/* Css for W3school Full Page Tabs (uses css + js file + js <button onclick="openPage()") https://www.w3schools.com/howto/howto_js_full_page_tabs.asp  */
+
+
+/* ---------------------------------------- Mobile */
+@media screen and (max-width: 480px) { 
+    .mobile-padding{
+		
+    }
+}
+
+
+.admin-add-new-item {box-sizing: border-box} /* if use * it will corrupt css */
+
+/* Set height of body and the document to 100% */
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial;
+}
+
+/* Style tab links */
+.tablink {
+  background-color: lavender; /* #555; */
+  color: grey; /*white;*/
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 17px;
+  width: 25%;
+}
+
+.tablink:hover {
+  background-color: #777; color: white;
+}
+
+
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+  color: white;
+  display: none;
+  padding: 100px 20px;
+  height: 100%;
+}
+
+#Home {background-color:  lavender; color: black;}
+
+#EditQuantity {background-color: lavender;  color: black;} /* alert-info   #f4f471*/
+#About {background-color: lavender;  color: black;}  /*   #f4f471*/
+
+/* mine */
+.admin-add-new-item{margin-bottom: 3em;}
