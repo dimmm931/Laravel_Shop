@@ -4,25 +4,17 @@
 $(document).ready(function(){
 	 
 	//var productsX is passed in View with var productsX = {!! $allProductsSearchBar->toJson() !!};
-	
-	//to make this script works only on SiteController/ViewOne
 	if (typeof productsX === 'undefined') { 
 	    alert ('Products are not passed');
 		return false;
-	} else {
-		//alert ('Users are passed');
-		//console.log(productsX );
 	}
 	
-	//Getting current URL to construct <a href> in autocomplete. Must be redone after pretty URLS (????)
-	var path = window.location.href;                              //http://localhost/Laravel+Yii2_comment_widget/blog_Laravel/public/admin-products
-	var urlX = path.substring(0, path.lastIndexOf("/") /*- 1*/); //http://localhost/Laravel+Yii2_comment_widget/blog_Laravel/public
-	//alert("i " +urlX);
-	
+	//Getting current URL to construct <a href> in autocomplete. Must be redone after pretty URLS
+	var path = window.location.href;                             //http://localhost/.../.../public/admin-products
+	var urlX = path.substring(0, path.lastIndexOf("/") /*- 1*/); //http://localhost/.../.../public	
 	
 	//array which will contain all products for autocomplete
 	var arrayAutocomplete = [];
-	
 	
 	//Loop through passed php object, object is echoed in JSON in Controller Product/action Shop
 	for (var key in productsX) {
@@ -31,13 +23,11 @@ $(document).ready(function(){
 	}
 	
 	
-	
     //Amendmenents in order one autocomplete can work both on user 'shopSimple' or admin 'admin-one-product' routes
 	//Redirects to different < a href> when users click autocompleted product
 	//we see here what is the route and determines what <a href> to use, when users click autocompleted product
 	var allPath = path.split('/');
 	var currenrRoute = allPath[allPath.length -1]; //returns 'admin-products' or 'shopSimple'
-	//alert(currenrRoute);
 	if(currenrRoute == 'shopSimple'){
 		var adminOrUserURL = 'showOneProduct' 
 	}
@@ -46,44 +36,23 @@ $(document).ready(function(){
 		var adminOrUserURL = 'admin-one-product'; //url to show one product
 	}
 	//End Amendmenents in order one autocomplete can work both on user '/shopSimple' or admin '/admin-products' routes
-
-	
-	
-	
-	
-	
 	
 	
     //Autocomplete itself
     $( function() {	
 	
-	     //fix function for autocomplete (u type email in <input id="userName">, get autocomplete hints and onSelect puts email value (i.e user ID to) to hidden <input id="userID">)
-	     function displaySelectedCategoryLabel(event, ui) {
-            $("#searchProduct").val(ui.item.label); //ui.item.label
-            //$("#userID").val(ui.item.value); //hidden <input id="userID"> to contain user (get from autocomplete array)
+	    //fix function for autocomplete (u type email in <input id="userName">, get autocomplete hints and onSelect puts email value (i.e user ID to) to hidden <input id="userID">)
+	    function displaySelectedCategoryLabel(event, ui) {
+            $("#searchProduct").val(ui.item.label); //ui.item.label //ui.item.value
             //event.preventDefault();
         };
 		
 		
-	
-		//Autocomplete 
-		/*
-		$("#searchUser").autocomplete({
-           minLength: 1,
-           source: arrayAutocomplete, //array for autocomplete
-		   
-		   select: function (event, ui) {
-                displaySelectedCategoryLabel(event, ui);
-            },
-        });
-		*/
-		
 		//Autocomplete, wrap hints in URL <a href>
 		$("#searchProduct").autocomplete({
-           minLength: 1,
-           source: arrayAutocomplete, //array from where take autocomplete
-		   
-		   select: function (event, ui) {
+            minLength: 1,
+            source: arrayAutocomplete, //array from where take autocomplete
+		    select: function (event, ui) {
                 displaySelectedCategoryLabel(event, ui);
             },
         }).data("ui-autocomplete")._renderItem = function (a, b) {
@@ -91,16 +60,7 @@ $(document).ready(function(){
             .data("item.autocomplete", b)
             .append('<a href="' + urlX + '/' + adminOrUserURL + '/' + b.value + '"> ' + b.label + '</a>' ) 
             .appendTo(a);
-			//$("#searchProduct").val(b.label);
         };
-		//END Autocomplete wrap hints in URL <a href>
-	
-		
    } );
-   
-   
-   
-   
-
 
 });

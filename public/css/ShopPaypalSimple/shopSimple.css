@@ -1,6 +1,5 @@
 /*------ My CSS for LiqPay Shop {Simple} front Page (page with all goods)-------------*/
 
-
 /* Badge CSS => round icon with quantity of tickets in cookie */
 .badge1[data-badge]:after {
    content:attr(data-badge);
@@ -28,14 +27,7 @@
 }
 /* ---------------------------------------- Mobile */
 
-
-
-
 .item-quantity{text-align: center;} /* font of quantity */
-
-
-
-
 
 
 /* --- CSS for Timeline \app\componentsX\views_components\LiqPay\ShopTimelineProgress::showProgress("Cart"); -------*/
@@ -62,7 +54,7 @@
 /* Divs with icons and lines */
 .icon-item{display: inline-block; width: 9%;}
 
-.items-list:after { clear: both;}
+.items-list:after{ clear: both;}
 
 
 /* ---------------------------------------- Mobile */
@@ -75,11 +67,6 @@
 }
 
 /* ---------------------   END CSS for Timeline \app\componentsX\views_components\LiqPay\ShopTimelineProgress::showProgress("Cart"); -------*/
-
-
-
-
-
 
 
 

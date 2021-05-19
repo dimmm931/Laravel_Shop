@@ -94,7 +94,7 @@ class ShopPayPalSimpleController extends Controller
 		
 		//find the product by id
 		$productOne = ShopSimple::where('shop_id', $id)->get();
-		$model = new ShopSimple(); //to call model method, e.g truncateTextProcessor($text, $maxLength)
+		$model      = new ShopSimple(); //to call model method, e.g truncateTextProcessor($text, $maxLength)
 		return view('ShopPaypalSimple.showOneProduct')->with(compact('productOne', 'model')); 
 	}
 	
@@ -132,8 +132,6 @@ class ShopPayPalSimpleController extends Controller
 			return redirect('/shopSimple')->withInput()->with('flashMessageFailX', 'Validation Failed' )->withErrors($validator);
 	    }
 		
-		
-		
 		session_start();
         
         //Method to add selected products to Cart $_SESSION['cart_dimmm931_1604938863'] or remove some product if quantity == 0
@@ -144,49 +142,43 @@ class ShopPayPalSimpleController extends Controller
 	
 	
 	
-	
+	//STOPPED HERE!!!!!!!!!!!!!!!!!!!!!!!
 	
 	
 	//simple rule to make your life easier... NEVER return a view in response to a POST request. Always redirect somewhere else which shows the result of the post or displays the next form.
 
 	/**
-     * method to go to check-out page. Gets form data with Final Cart send via POST form and redirects to GET /checkOut2. Request comes from form in ShopPaypalSimple.cart
+     * Method to go to check-out page. Handles $_POST request and redirects further.
+     * Gets form data with Final Cart send via POST form and redirects to GET /checkOut2. Request comes from form in ShopPaypalSimple.cart
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     *
      */
 	 
     public function checkOut(Request $request)
     {
-		//Doesnot work as router would not come here a GET request
-		$method = $request->method();
-        if (!$request->isMethod('post')) {
-            throw new \App\Exceptions\myException('Bad request!!!.Not POST, You are not expected to enter this page.');
-        }
-		//Doesnot work
-
 		//if $_POST['productID'] is not passed. In case the user navigates to this page by enetering URL directly, without submitting from with $_POST
 		if(!$request->input('productID')){
 			throw new \App\Exceptions\myException('Bad request, You are not expected to enter this page.');
 		}
 		
 		session_start();
-		$productIDs = $request->input('productID'); //comes as array [6,9,9]
+		$productIDs   = $request->input('productID');       //comes as array [6,9,9]
 		$productQuant = $request->input('yourInputValueX'); //comes as array [6,9,9]
 		
 		//check if inputs are not even
 		if(count($productIDs) != count($productQuant)){
-			throw new \App\Exceptions\myException('Cart inputs arrays ids and quant are not even.');
+			throw new \App\Exceptions\myException('Cart inputs arrays ids and quantity are not even.');
 		}
 		
-		//update the $_SESSION['cart_dimmm931_1604938863'] in case at cart the user --minus product till zero
+		//update the $_SESSION['cart_dimmm931_1604938863'] unless the case the user --minus product at cart till zero
 		$temp = array();
 		for ($i = 0; $i < count($productIDs); $i++){
 		  if((int)$productQuant[$i] != 0){
-			$temp[$productIDs[$i]] = (int)$productQuant[$i];//в масив заносим количество of products 
+			$temp[$productIDs[$i]] = (int)$productQuant[$i];//add to array number of products 
 		  }
 		}
 		$_SESSION['cart_dimmm931_1604938863'] = $temp;//write temp var to Cart
-		//end update
 		
 	    return redirect('/checkOut2');
 
@@ -194,8 +186,7 @@ class ShopPayPalSimpleController extends Controller
 	
 	
 	
-	
-	
+
 	
 	/**
      * $_GET Method is accessed via redirect from this controller function checkOut(Request $request)
@@ -211,31 +202,30 @@ class ShopPayPalSimpleController extends Controller
 		
 		//Generate UUID (unique ID for order)
 		$model = new ShopSimple();
-		$uuid = $model->generateUUID(6);
-		//dd($uuid);
+		$uuid  = $model->generateUUID(6);
 		
 		//Gets Products that are already in cart to display them in view
 		//if session with Cart set previously (user has already selected some products to cart)
 		if(isset($_SESSION['cart_dimmm931_1604938863'])){
 			
-		   $arrayWithIDsInCart = array(); //array to store products IDs that are currentlyin cart, i.e [5,7,9]
+           //Read cart $_SESSION['cart_dimmm931_1604938863'], e.g [5,7,9] and find relevant products in DB
+           $model = new ShopSimple();
+           $inCartItems = $model->findCartProductsByID();
+           
+            /*
+		    $arrayWithIDsInCart = array(); //array to store products IDs that are currentlyin cart, i.e [5,7,9]
 		   
-		   foreach($_SESSION['cart_dimmm931_1604938863'] as $key => $value){
-			  array_push($arrayWithIDsInCart, $key);
-		   }
-		   //find DB products, but only those ids are present in the cart, i.e $_SESSION['cart_dimmm931_1604938863']
-		   $allProductsAll = ShopSimple::whereIn('shop_id', $arrayWithIDsInCart)->get();
-           $inCartItems = $allProductsAll->toArray(); //object to array to perform search_array in view
+		    foreach($_SESSION['cart_dimmm931_1604938863'] as $key => $value){
+			    array_push($arrayWithIDsInCart, $key);
+		    }
+		    //find DB products, but only those ids are present in the cart, i.e $_SESSION['cart_dimmm931_1604938863']
+		    $allProductsAll = ShopSimple::whereIn('shop_id', $arrayWithIDsInCart)->get();
+            $inCartItems    = $allProductsAll->toArray(); //object to array to perform search_array in view
+            */
 		} 
 		//End Gets Products that are already in cart to display them in view  
-		  
-		
-		
-		
+		 
 
-
-		//dd($request->input('productID'), $request->input('yourInputValueX'));
-	    //return redirect('/shopSimple')->with('flashMessageX', "Was successfully added to cart. Product: " . $productOne[0]->shop_title  . ". Quantity : " . $request->input('yourInputValue') . " items" );
         return view('ShopPaypalSimple.checkOut')->with(compact('inCartItems', 'uuid')); 
 
 	}
@@ -244,16 +234,17 @@ class ShopPayPalSimpleController extends Controller
 	
 	
 	
-	//simple rule to make your life easier... NEVER return a view in response to a POST request. Always redirect somewhere else which shows the result of the post or displays the next form.
+	//NEVER return a view in response to a POST request. Always redirect somewhere else which shows the result of the post or displays the next form.
 
 	/**
+     * Handles $_POST request and redirects further.
      * $_POST Method gets <form> data via $_POST from Checkout/Order page {i.e this controller function checkOut2()}(Shipping details (address, phone. etc)) and redirects to $_GET page route {payPage2}. 
 	 * Form Request comes from form in ShopPaypalSimple.check-out
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
 	 
-    public function pay1(ShopShippingRequest $request)  //Request $request //REASSIGNED to \Http\FormRequest\hopShippingRequest
+    public function pay1(ShopShippingRequest $request)  
     {
 		//if $_POST['u_name'] is not passed. In case the user navigates to this page by enetering URL directly, without submitting from with $_POST
 		if(!$request->input('u_name')){
@@ -262,71 +253,50 @@ class ShopPayPalSimpleController extends Controller
 		
 		session_start();
 		
-		//This validation is reassigned for \App\Http\Requests\ShopShippingRequest;
-		/*
-		$RegExp_Phone = '/^[+]380[\d]{1,4}[0-9]+$/';
-		
-		$rules = [
-			'u_name' => ['required', 'string', 'min:3'], 
-			'u_address'  => [ 'required',  'string', 'min:8'],
-            'u_email'  => [ 'required', 'email' ] ,
-            'u_phone'  => [ 'required', "regex: $RegExp_Phone" ] ,			
-			
-		];
-		
-	    //creating custom error messages. Should pass it as 3rd param in Validator::make()
-	    $mess = [ 
-		    'u_name.required' => 'We need u to specify your name',
-			'u_email.email' => 'Give us real email',
-			'u_phone.regex' => 'Phone must be in format +380....',
-		];
-		
-	    $validator = Validator::make($request->all(),$rules, $mess);
-	    if ($validator->fails()) {
-			return redirect('/checkOut2')->withInput()->with('flashMessageFailX', 'Validation Failed' )->withErrors($validator);
-	    }
-		*/
-		
 		//gets all inputs
 		$input = $request->all();
-		
 		
 		//Gets Products that are already in cart to display them in view
 		//if session with Cart set previously (user has already selected some products to cart)
 		if(isset($_SESSION['cart_dimmm931_1604938863'])){
 			
-		   $arrayWithIDsInCart = array(); //array to store products IDs that are currentlyin cart, i.e [5,7,9]
+           //Read cart $_SESSION['cart_dimmm931_1604938863'], e.g [5,7,9] and find relevant products in DB
+           $model = new ShopSimple();
+           $inCartItems = $model->findCartProductsByID();
+           
+            /*
+		    $arrayWithIDsInCart = array(); //array to store products IDs that are currentlyin cart, i.e [5,7,9]
 		   
-		   foreach($_SESSION['cart_dimmm931_1604938863'] as $key => $value){
-			  array_push($arrayWithIDsInCart, $key);
-		   }
-		   //find DB products, but only those ids are present in the cart, i.e $_SESSION['cart_dimmm931_1604938863']
-		   $allProductsAll = ShopSimple::whereIn('shop_id', $arrayWithIDsInCart)->get();
-           $inCartItems = $allProductsAll->toArray(); //object to array to perform search_array in view
+		    foreach($_SESSION['cart_dimmm931_1604938863'] as $key => $value){
+			    array_push($arrayWithIDsInCart, $key);
+		    }
+		    //find DB products, but only those ids are present in the cart, i.e $_SESSION['cart_dimmm931_1604938863']
+		    $allProductsAll = ShopSimple::whereIn('shop_id', $arrayWithIDsInCart)->get();
+            $inCartItems = $allProductsAll->toArray(); //object to array to perform search_array in view
+            */
 		} 
 		//End Gets Products that are already in cart to display them in view  
-		
-		
-		
-		
+				
 		//save an Order to DB tables {shop_orders_main} and {shop_order_item}
-		$shopOrdersMain = new ShopOrdersMain();
+		$shopOrdersMain  = new ShopOrdersMain();
 		$ShopOrdersItems = new ShopOrdersItems();
 		
 		//additionally check if SESSION still exists
 		if (!isset($_SESSION['cart_dimmm931_1604938863'])) {
-		    return redirect('/checkOut2')->with('flashMessageFailX', "Error, SESSION is coruupted " );
+		    return redirect('/checkOut2')->with('flashMessageFailX', "Error, SESSION is corrupted " );
 		}
 			
 	
 		
 		if($savedID = $shopOrdersMain->saveFields_to_shopOrdersMain($request->all())){  //saving to table {shop_orders_main} DB that stores general info about the order (general amount, price, email, etc ) //$savedID is an id of saved/Inserted row
-		    //an attempt to delete $savedID
-			try { 
-			    $ShopOrdersItems->saveFields_to_shop_order_item( $savedID, $_SESSION['cart_dimmm931_1604938863'], $inCartItems );  // saving to table {shop_order_item} to store a one user's order split by items, ie if Order contains 2 items (dvdx2, iphonex3). 
-				
-			    return redirect('payPage2')->with(compact('input', 'savedID'))->with('flashMessageX', "Your Order data is saved to DB with id " . $savedID . ". Now you have 24 hours to proceed with payment or the Order will be discarted (i.e DELETE where not-paid && now() - order time =< 24 hours)." ); //$input in longer neccessary, reassigned to  $savedID , i.e ID of saved order (and use it to get values from DB)
 		    
+			try { 
+			    $ShopOrdersItems->saveFields_to_shop_order_item($savedID, $_SESSION['cart_dimmm931_1604938863'], $inCartItems );  // saving to table {shop_order_item} to store a one user's order split by items, ie if Order contains 2 items (dvdx2, iphonex3). 
+			    return redirect('payPage2')
+                    ->with(compact('input', 'savedID'))
+                    ->with('flashMessageX', "Your Order data is saved to DB with id " . $savedID . ". Now you have 24 hours to proceed with payment or the Order will be discarted (i.e DELETE where not-paid && now() - order time =< 24 hours)." ); //$input in longer neccessary, reassigned to  $savedID , i.e ID of saved order (and use it to get values from DB)
+		    
+            //an attempt to delete $savedID if $ShopOrdersItems->saveFields_to_shop_order_item() fails
 			} catch( Throwable $e ) {
 				$delete = ShopOrdersMain::where('order_id', $savedID)->delete(); //If error Delete by ID from table {shop_orders_main} as well
 				return redirect('/checkOut2')->with('flashMessageFailX', "Error saving to DB {shop_order_item}. Try Later" );
@@ -348,8 +318,9 @@ class ShopPayPalSimpleController extends Controller
 	
 	/**
      * $_GET Method is accessed via redirect from function pay1(Request $request) with data $input
-     * @param  \Illuminate\Http\Request  $request
+     * @param  
      * @return \Illuminate\Http\Response
+     *
      */
 	 
     public function pay2()
@@ -361,21 +332,14 @@ class ShopPayPalSimpleController extends Controller
 		
 		//gets all inputs. Get it from redirect in function pay1(Request $request)
 		$input = session()->get('input');
-		
-		
-		
+			
 		//Gets Products that are already in cart to display them in view
 		//if session with Cart set previously (user has already selected some products to cart)
 		if(isset($_SESSION['cart_dimmm931_1604938863'])){
 			
-		   $arrayWithIDsInCart = array(); //array to store products IDs that are currentlyin cart, i.e [5,7,9]
-		   
-		   foreach($_SESSION['cart_dimmm931_1604938863'] as $key => $value){
-			  array_push($arrayWithIDsInCart, $key);
-		   }
-		   //find DB products, but only those ids are present in the cart, i.e $_SESSION['cart_dimmm931_1604938863']
-		   $allProductsAll = ShopSimple::whereIn('shop_id', $arrayWithIDsInCart)->get();
-           $inCartItems = $allProductsAll->toArray(); //object to array to perform search_array in view
+            //Read cart $_SESSION['cart_dimmm931_1604938863'], e.g [5,7,9] and find relevant products in DB
+            $model = new ShopSimple();
+            $inCartItems = $model->findCartProductsByID();
 		} 
 		//End Gets Products that are already in cart to display them in view
 		
@@ -384,24 +348,19 @@ class ShopPayPalSimpleController extends Controller
 		//finding this One order in DB by ID {$savedID} passed from {function pay1}
 		$thisOrder = ShopOrdersMain::where('order_id', session()->get('savedID') )->get();
 		
-		
-		
-		
 		//LiqPay SDK Button (to pass to view). LiqPay Object is created here with credentials. method is called in view.    
 		//$liqpay = new LiqPay(env('LIQPAY_PUBLIC_KEY'), env('LIQPAY_PRIVATE_KEY'));
 		$liqpay = new LiqPay(env('LIQPAY_PUBLIC_KEY', 'screw'), env('LIQPAY_PRIVATE_KEY', 'screw')); //using env Constants
-        
-
-		
-		return view('ShopPaypalSimple.pay-page')->with(compact('input', 'inCartItems', 'thisOrder', 'thisOrderID', 'liqpay'));  
-
+       	
+		return view('ShopPaypalSimple.pay-page')
+            ->with(compact('input', 'inCartItems', 'thisOrder', 'thisOrderID', 'liqpay'));  
 	}
 	
 	
 	
 	
 	/**
-     * final payment page, returned by PayPal INP Listener, displays if payment was successfull or not
+     * final payment page, returned by PayPal INP Listener/LiqPay callback, displays if payment was successfull or not
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -409,9 +368,7 @@ class ShopPayPalSimpleController extends Controller
     public function payOrFail()
     {
 		$postData = file_get_contents('php://input');
-		
 		$input_data = $_POST;
-		
 		return view('ShopPaypalSimple.payOrFail_final')->with(compact('postData', 'input_data'));  
 	}
 	

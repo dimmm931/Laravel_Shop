@@ -1,8 +1,6 @@
-
 <?php
 //Is used both in /views/ShopPaypalSimple/shopIndex.blade.php and /views/ShopPaypalSimple/showOneProduct.blade.php
 //Show One product with hidden modal
-
 //<!-- Show One product with hidden modal. Used to render partial in loop(shopIndex.blade.php) or separately (when show 1 product from SearchBar) (showOneProduct.blade.php) -->
 //accepts 2 arg: arg[0] - is an iterator (to use in loop or for single record, arg[1] - is an object with data )
 //to work 100% must include js :
@@ -12,8 +10,6 @@
    //<script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script> <!--Sweet Alert JS-->
    //<script src="{{ asset('js/ShopPaypalSimple/shopSimple.js')}}"></script>
 
-
-
 				
 //check if product already in cart, if Yes-> get its quantity, if no-. sets to 1
 if (isset($_SESSION['cart_dimmm931_1604938863']) && isset($_SESSION['cart_dimmm931_1604938863'][$allDBProducts[$i]['shop_id']])){
@@ -21,8 +17,6 @@ if (isset($_SESSION['cart_dimmm931_1604938863']) && isset($_SESSION['cart_dimmm9
 } else {
 	$quantityX = 1;
 }
-
-
 ?>		
 
 <!-- Visible by default -->		   	
@@ -30,14 +24,7 @@ if (isset($_SESSION['cart_dimmm931_1604938863']) && isset($_SESSION['cart_dimmm9
     <div class="col-sm-4 col-xs-4">             {{$allDBProducts[$i]['shop_title']}} </div>
 	<div class="col-sm-3 col-xs-4 word-breakX"> {{$allDBProducts[$i]['shop_price']}}   {{$allDBProducts[$i]['shop_currency']}}</div>
 	<div class="col-sm-2 hidden-xs"> <!-- hidden in mobile --> {{$model->truncateTextProcessor($allDBProducts[$i]['shop_descr'], 8) }}  </div>  <!-- hidden in mobile --> 	
-	<div class="col-sm-3 col-xs-4">
-        <!--  
-					        //LightBox variant, need downloading spec css/js libraries, see https://github.com/account931/portal_v2/blob/master/assets/AppAsset.php
-					        /*"<a href= " . Yii::$app->getUrlManager()->getBaseUrl(). '/images/shopLiqPay_Simple/'. $allDBProducts[$i]['image']  . "  data-lightbox='image-1' data-title='My caption'>" .
-					       '<img data-src=' .  Yii::$app->getUrlManager()->getBaseUrl(). '/images/shopLiqPay_Simple/'. $allDBProducts[$i]['image']  . ' class="my-one lightboxed">'. //LazyLoad
-						    "</a>" .*/
-	    -->
-						
+	<div class="col-sm-3 col-xs-4">				
 	    <!--Image with lazyLoad-->
 	    <!--<img class="lazy my-one" src="{{URL::to("/")}}/images/ShopSimple/{{$allDBProducts[$i]['shop_image'] }}"  alt="a" />-->
 		<img class="lazy my-one" data-original="{{URL::to("/")}}/images/ShopSimple/{{$allDBProducts[$i]['shop_image'] }}"  alt="a" />
@@ -48,14 +35,11 @@ if (isset($_SESSION['cart_dimmm931_1604938863']) && isset($_SESSION['cart_dimmm9
 @if($i%2 != 0 )
 	<div class="col-sm-12 col-xs-12">even</div>
 @else 
-<!--add horizontal space between 2 goods-->
+    <!--add horizontal space between 2 goods-->
 	<div class="col-sm-1 col-xs-1">s</div>
 @endif
 						
-		                
-
-
-		
+		                	
 <!--------- Hidden Modal Window with one clicked item (category, description, price and other additional info)---------->
 <div class="modal fade" id="myModal{{$i}}" role="dialog">
     <div class="modal-dialog modal-lg">
@@ -73,8 +57,6 @@ if (isset($_SESSION['cart_dimmm931_1604938863']) && isset($_SESSION['cart_dimmm9
 					
 				</h4> 
 		        <?php
-				//var_dump($_SESSION['cart_dimmm931_1604938863']);
-				//echo "llll " . $_SESSION['cart_dimmm931_1604938863'][7] . " ";
 				//checks if this product already in the cart
 				if (isset($_SESSION['cart_dimmm931_1604938863']) && isset($_SESSION['cart_dimmm931_1604938863'][$allDBProducts[$i]['shop_id']])){
 				    echo "<p class='text-danger'>Already " . $_SESSION['cart_dimmm931_1604938863'][$allDBProducts[$i]['shop_id']] . " items was added to the cart.</p>";
@@ -124,113 +106,72 @@ if (isset($_SESSION['cart_dimmm931_1604938863']) && isset($_SESSION['cart_dimmm9
 					 
             </div>
 					 
-					 <!--- Dublicate: Total product sum calculation (2x16.64=N) -->
-					  <!--<div class="col-sm-12 col-xs-12">
-					      <div class="col-sm-5 col-xs-2 shadowX"></div> 
-						  
-					      <div class="col-sm-3 col-xs-6 list-group-item ">
-						      <span class="sum"></span>
-						  </div>
-					  </div>-->
-						 
-						 
-						 
+ 
 			<!---------- Section ++button /form input/--button ------->
 			<div class="row">
 					 
-			<!--- Empty div to keep distance -->
-			<div class="col-sm-4 col-xs-2"> 
-			</div>
+			    <!--- Empty div to keep distance -->
+			    <div class="col-sm-4 col-xs-2"> 
+			    </div>
 					    
 						
-			<!--- Plus button, contains additional data: price, currency, quantity left -->
-			<div class="col-sm-1 col-xs-2"> 
-				<button type="button" class="btn btn-primary button-plus" 
+			    <!--- Plus button, contains additional data: price, currency, quantity left -->
+			    <div class="col-sm-1 col-xs-2"> 
+				    <button type="button" class="btn btn-primary button-plus" 
 				        data-currX="{{$allDBProducts[$i]['shop_currency']}}" 
 						data-priceX="{{$allDBProducts[$i]['shop_price']}}" 
 						data-quantLeft="{{$allDBProducts[$i]->quantityGet->left_quantity }}"><!--hasOne relation in '/model/ShopSimple' on table {shop_quantity} -->
-				    +
-				</button> 
-				                                                                                                                
-			</div>
+				         +
+				    </button> 
+
+			    </div>
 						 
 						 
 						
-			<!-- form with input -->
-			<div class="col-sm-2 col-xs-3">
-		                    <?php 
-							 //DUBLICATE
-							 //check if product already in cart, if Yes-> get its quantity, if no-. sets to 1
-							 /*
-							 if (isset($_SESSION['cart_dimmm931_1604938863']) && isset($_SESSION['cart_dimmm931_1604938863'][$allDBProducts[$i]['shop_id']])){
-							     $quantityX = $_SESSION['cart_dimmm931_1604938863'][$allDBProducts[$i]['shop_id']]; //gets the quantity from cart
-							 } else {
-								 $quantityX = 1;
-		                     }
-							 */
-							
-							 
-							 //Form with quantity input
-							 /*
-					         $form = ActiveForm::begin(['action' => ['shop-liqpay-simple/add-to-cart'],'options' => ['method' => 'post', 'id' => 'formX'],]); 
-                                 echo $form->field($myInputModel, 'yourInputValue')->textInput(['maxlength' => true,'value' => $quantityX, 'class' => 'item-quantity form-control'])->label(false); //product quantity input
-                                 echo $form->field($myInputModel, 'productID')->hiddenInput(['value' => $allDBProducts[$i]['id'],])->label(false); //product ID hidden input
-                              */
-							 ?>
-								
-                               <!--								
- 	                             <div class="form-group">
-                                    <?php // echo Html::submitButton(Yii::t('app', 'Add to cart'), ['class' => 'btn btn-primary shadowX submitX rounded' , 'id'=>'']) ?>
-                                 </div>
-								 -->
-                             <?php // ActiveForm::end(); ?>
-							 
-							 
-							 
-			    <!------- New form (with button "add to cart") -------->
-				<form method="post" class="form-assign" action="{{url('/addToCart')}}">
-					<input type="hidden" value="{{csrf_token()}}" name="_token"/>
-					<input type="number" value="{{$quantityX}}" name="yourInputValue" class="item-quantity form-control" />
-					<input type="hidden" value="{{$allDBProducts[$i]['shop_id']}}" name="productID" />
-					</br><input type="submit" class="btn btn-primary shadowX submitX rounded" value="Add to cart"/>
-				</form>
-				<!-- end New form (with button "add to cart") -------->
+			    <!-- form with input -->
+			    <div class="col-sm-2 col-xs-3">
+							 		 
+			        <!------- New form (with button "add to cart") -------->
+				    <form method="post" class="form-assign" action="{{url('/addToCart')}}">
+					    <input type="hidden" value="{{csrf_token()}}" name="_token"/>
+					    <input type="number" value="{{$quantityX}}" name="yourInputValue" class="item-quantity form-control" />
+					    <input type="hidden" value="{{$allDBProducts[$i]['shop_id']}}" name="productID" />
+					    </br><input type="submit" class="btn btn-primary shadowX submitX rounded" value="Add to cart"/>
+				    </form>
+				    <!-- end New form (with button "add to cart") -------->
 				
 				
-				<!------- New form (with button "Buy in one click") -------->
-				<form method="post" class="form-assign" action="{{url('/addToCart')}}">
-					<input type="hidden" value="{{csrf_token()}}" name="_token"/>
-					<input type="hidden" value="{{$allDBProducts[$i]['shop_id']}}" name="productID" />
-					</br><input onclick="alert('Not implemented yet.Add to cart');return false;" type="submit" class="btn btn-primary shadowX rounded" value="Buy in one click"/>
-				</form>
-				<!-- end New form (with button "Buy in one click")-->
-			</div>
+				    <!------- New form (with button "Buy in one click") -------->
+				    <form method="post" class="form-assign" action="{{url('/addToCart')}}">
+					    <input type="hidden" value="{{csrf_token()}}" name="_token"/>
+					    <input type="hidden" value="{{$allDBProducts[$i]['shop_id']}}" name="productID" />
+					    </br><input onclick="alert('Not implemented yet.Add to cart');return false;" type="submit" class="btn btn-primary shadowX rounded" value="Buy in one click"/>
+				    </form>
+				    <!-- end New form (with button "Buy in one click")-->
+			    </div>		  
+			    <!-- End form with input -->
 						  
-			<!-- End form with input -->
 						  
-						  
-			<!--- Minus button -->
-			<?php
-			//getting flag, used to detect if product is already in cart
-			if (isset($_SESSION['cart_dimmm931_1604938863']) && isset($_SESSION['cart_dimmm931_1604938863'][$allDBProducts[$i]['shop_id']])){
-				$ifInCartFlag = " data-cartFlag ='true'";
-			} else {
-				$ifInCartFlag = " data-cartFlag ='false' ";
-			}
-			?>
-			<div class="col-sm-1 col-xs-2"> 
-			    <button type="button" class="btn btn-danger button-minus" data-currX="{{$allDBProducts[$i]['shop_currency']}}"  data-priceX="<?php echo $allDBProducts[$i]['shop_price'].'"'; echo $ifInCartFlag; ?>>-</button>
-			</div>
+			    <!--- Minus button -->
+			    <?php
+			    //getting flag, used to detect if product is already in cart
+			    if (isset($_SESSION['cart_dimmm931_1604938863']) && isset($_SESSION['cart_dimmm931_1604938863'][$allDBProducts[$i]['shop_id']])){
+				    $ifInCartFlag = " data-cartFlag ='true'";
+			    } else {
+				    $ifInCartFlag = " data-cartFlag ='false' ";
+			    }
+			    ?>
+			    <div class="col-sm-1 col-xs-2"> 
+			        <button type="button" class="btn btn-danger button-minus" data-currX="{{$allDBProducts[$i]['shop_currency']}}"  data-priceX="<?php echo $allDBProducts[$i]['shop_price'].'"'; echo $ifInCartFlag; ?>>-</button>
+			    </div>
 						 
-            <!--- Empty div to keep distance -->						 
-			<div class="col-sm-3 col-xs-3">
-			</div>
+                <!--- Empty div to keep distance -->						 
+			    <div class="col-sm-3 col-xs-3">
+			    </div>
 						  
 		    </div>
 			<!---------- END Section ++button /form input/--button ------->
-					 
-					 
-					  
+			  
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
