@@ -211,4 +211,32 @@ class ShopSimple extends Model
 		
 		return redirect('/shopSimple')->with('flashMessageX', "Item was successfully added to cart. Product: " . $productOne[0]->shop_title . ". Quantity : " . $request->input('yourInputValue') . " items" );
     } 
+    
+    /**
+     * Method to save new product to DB (used in admin panel)
+     * @param array $data
+     * @param string $imageName
+     * @return array
+     *
+     * 
+     */
+    function saveNewProduct($data, $imageName)
+    {
+        $this->shop_title      = $data['product-name'];
+		$this->shop_descr      = $data['product-desr'];
+		$this->shop_price      = $data['product-price'];
+		$this->shop_image      = $imageName; //$request->image->getClientOriginalName();
+		$this->shop_currency   = '$' ;
+		$this->shop_categ      = $data['product-category'];
+		$this->sh_device_type  = $data['product-type'];
+		$this->shop_created_at = date('Y-m-d H:i:s');
+        
+        if($this->save()) {
+            return array('status'=> true, 'savedID'=> $this->shop_id);
+        } else {
+            return array('status'=> false);
+
+        }            
+    }
+    
 }

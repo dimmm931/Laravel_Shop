@@ -3,14 +3,13 @@
 
 - <p>Zizaco/Entrust is a succinct and flexible way to add Role-based Permissions to Laravel</p>
 - <p>To run the application on <b>http://localhost</b>, copy the repository code and run <b>composer install</b> to load all dependencies. </p>
-- <p>Create root file <b>.env</b> with your DB seetings based on  <b>.env.example</b>. Don't forget to add <b>LIQPAY_PUBLIC_KEY</b> and <b>LIQPAY_PRIVATE_KEY</b> to enable on-line payment </p>
+- <p>Create root file <b>.env</b> with your DB seetings based on  <b>.env.example</b>. Don't forget to add <b>LIQPAY_PUBLIC_KEY</b>, <b>LIQPAY_PRIVATE_KEY</b> and <b>LIQPAY_RETURN_URL</b> to enable on-line payment. In order to enable PayPal payment, additionally add <b>PAYPAL_PAYNOW_BUTTON_URL</b>, <b>PAYPAL_RECEIVER_EMAIL</b> and <b>PAYPAL_RETURN_URL</b>   </p>
 - <p>Run <b> php artisan key:generate </b> </p>
 - <p>Then use <b> php artisan migrate </b> to migrate databases</p>
 - <p>If Entrust migration did not run automatically, run additional command  <b> php artisan entrust:migration </b> to generate the Entrust migration</p>
 - <p>When the migration is completed, run the seeding command <b> php artisan db:seed </b> to seed the dummy data, after you may login using login: <b>test@gmail.com</b>, password: <b>testtest</b>. </p>
 - <p>Js assets are minified and concatenated with Laravel Mix, source code is in <b>/resources/assets</b>, to manage JS dependencies run <b>npm install</b>, to minify js files run <b>npm run production</b>, to automate your build when there is any change use <b>npm run watch </b></p>
 - <p>If encounter error <b> cross-env not found </b> , firstly run command <b>npm i cross-env --save</b> </p>
-- <p> To enable PayPal payments, please add your PayPal credentials at <b> views/ShopPaypalSimple/pay-page.blade.php </b> </p>
 
 ## Brief overview of the application
 
@@ -30,6 +29,75 @@
 
 ![Screenshot](public/images/Screenshots/4.png)
 
+## View one product
+
+![Screenshot](public/images/Screenshots/6.png)
+
+## Product was added to cart
+
+![Screenshot](public/images/Screenshots/7.png)
+
+## Cart
+
+![Screenshot](public/images/Screenshots/8.png)
+
+## Check-out page
+
+![Screenshot](public/images/Screenshots/9.png)
+
+![Screenshot](public/images/Screenshots/10.png)
+
+## Payment page
+
+![Screenshot](public/images/Screenshots/11.png)
+
+## Payment via LiqPay
+
+![Screenshot](public/images/Screenshots/12.png)
+
+## Payment via PayPal
+
+![Screenshot](public/images/Screenshots/13.png)
+
+![Screenshot](public/images/Screenshots/14.png)
+
+![Screenshot](public/images/Screenshots/15.png)
+
+## Admin Panel (amount of new orders is updated via ajax)
+
+![Screenshot](public/images/Screenshots/20.png)
+
+## Admin Panel protected with Entrust RBAC
+
+![Screenshot](public/images/Screenshots/21.png)
+
+## Admin Panel - View all products with option to delete, edit or add new
+
+![Screenshot](public/images/Screenshots/22.png)
+
+## Admin Panel - View one product
+
+![Screenshot](public/images/Screenshots/23.png)
+
+## Admin Panel - Edit a product
+
+![Screenshot](public/images/Screenshots/24.png
+
+## Admin Panel - Edit a product quantity in stock
+
+![Screenshot](public/images/Screenshots/25.png)
+
+## Admin Panel - Add a new product
+
+![Screenshot](public/images/Screenshots/26.png)
+
+## Admin Panel - Orders page
+
+![Screenshot](public/images/Screenshots/27.png)
+
+## Admin Panel - Change order status
+
+![Screenshot](public/images/Screenshots/28.png)
 
 [Watch video presentation on Youtube]( https://youtu.be/TiHNEgZ1uAM )
  

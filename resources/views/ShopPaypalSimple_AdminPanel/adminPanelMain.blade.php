@@ -54,21 +54,7 @@
 				    <div class="col-sm-10 col-xs-10">
                         <h1>Shop PayPal Admin Panel</h1>
 		            </div>	
-				
-				    <!-------- Cart icon with badge ----------->
-		            <?php 
-		            //get the car quantity. NOT USED IN ADMIN PANEL.
-		            if (isset($_SESSION['cart_dimmm931_1604938863'])) { 
-		                $c = count($_SESSION['cart_dimmm931_1604938863']); 
-		            } else { 
-			           $c = 0; 
-		            } 
-                    ?>
-		
-		            <div class="col-sm-2 col-xs-2 badge1 bb" data-badge="<?php echo $c; ?> ">
-					    <a href="{{ route('cart') }}"> <i class="fa fa-cart-plus fa-4x" aria-hidden="true"></i> </a>
-                    </div>
-                    <!-------- Cart icon with badge ----------->
+	
 		
 		
 		
@@ -77,7 +63,7 @@
                     <div class="col-sm-12 col-xs-12 adm-icons"> <hr>
                         <center>
 	   
-	                        <div class="col-sm-2 col-xs-6 mobile-padding badge1 bb " data-badge="?"> <!-- badge -->
+	                        <div class="col-sm-2 col-xs-6 mobile-padding badge1 bb " data-badge=""> <!-- badge -->
                                 <div class='subfolder border shadowX'>
 					                <a href="{{ route('admin-products') }}">  
 						                <i class="fa fa-address-card-o" style="font-size:96px"></i> 
@@ -98,7 +84,7 @@
 					  
 					        <div class="col-sm-2 col-xs-6 mobile-padding badge1 bb " data-badge=""> <!-- badge -->
                                 <div class='subfolder border shadowX'>
-					                <a href="{{ route('cart') }}">  
+					                <a href="#">  
 						                <i class="fa fa-automobile" style="font-size:96px"></i> 
 							            <p>Category</p><br>  
 						            </a>
@@ -108,7 +94,7 @@
 	   
 	                        <div class="col-sm-2 col-xs-6 mobile-padding badge1 bb " data-badge=""> <!-- badge -->
                                 <div class='subfolder border shadowX'>
-					                <a href="{{ route('cart') }}">  
+					                <a href="#">  
 						                <i class="fa fa-book" style="font-size:96px"></i> 
 							            <p>Quantity</p><br>  
 						            </a>

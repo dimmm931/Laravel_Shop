@@ -45,13 +45,15 @@
 					
 					
                     <div class="panel-heading text-warning">
-                        <i class="fa fa-desktop" style="font-size:84px"></i>
+                        <i class="fa fa-shopping-basket" style="font-size:84px"></i>
                         Shop <span class="small text-danger">*</span> 
                     </div>
                 
                     <div class="panel-body">
                         <p> <i class="fa fa-check-circle-o" style="font-size:24px"></i> Different categories.</p>
                         <p> <i class="fa fa-check-circle-o" style="font-size:24px"></i> Personal cart.</p>
+                        <p> <i class="fa fa-check-circle-o" style="font-size:24px"></i> On-line LiqPay/PayPal payment.</p>
+                        <p> <i class="fa fa-check-circle-o" style="font-size:24px"></i> Admin panel.</p>
                         <p> <i class="fa fa-check-circle-o" style="font-size:24px"></i> <a href="{{ url('/shopSimple') }}"> Go to shop </a></p>
                     </div>
                 

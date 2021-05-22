@@ -33,10 +33,10 @@ if (isset($_SESSION['cart_dimmm931_1604938863']) && isset($_SESSION['cart_dimmm9
 				 
 <!--adds vertical space after 2 divs with goods-->
 @if($i%2 != 0 )
-	<div class="col-sm-12 col-xs-12">even</div>
+	<div class="col-sm-12 col-xs-12"><!-- even -->-</div>
 @else 
     <!--add horizontal space between 2 goods-->
-	<div class="col-sm-1 col-xs-1">s</div>
+	<div class="col-sm-1 col-xs-1"><!-- s --></div>
 @endif
 						
 		                	

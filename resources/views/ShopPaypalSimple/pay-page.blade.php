@@ -272,15 +272,15 @@
 
                             <!-------  REAL PAYPAL Payment Button ------>
 	                        <?php
-	                        $payNowButtonUrl = 'https://www.sandbox.paypal.com/cgi-bin/websc';
-	                        $receiverEmail   = 'sb-qwtmd3901800@personal.example.com'; //email получателя платежа(на него зарегестрирован paypal аккаунт) 
+	                        $payNowButtonUrl = env('PAYPAL_PAYNOW_BUTTON_URL', 'screw'); //'https://www.sandbox.paypal.com/cgi-bin/websc';
+	                        $receiverEmail   = env('PAYPAL_RECEIVER_EMAIL', 'screw');    //'sb-qwtmd3901800@personal.example.com'; //email получателя платежа(на него зарегестрирован paypal аккаунт) 
 
                             $productId = 1;
                             $itemName  = 'Complex Order';	// название продукта
                             $amount    = $totalSum; //'1.0'; // цена продукта(за 1 шт.)
                             $quantity  = 1;	// количество
 
-                            $returnUrl  = 'http://account93.zzz.com.ua/laravel_CPH/public/pay-or-fail?status=paymentSuccess';
+                            $returnUrl  = env('PAYPAL_RETURN_URL', 'screw'); //'http://account93.zzz.com.ua/laravel_CPH/public/pay-or-fail?status=paymentSuccess';
                             $customData = ['user' => 'Dima', 'product_id' => $productId, 'myOrderID' => $thisOrderID ];
                             ?>
 
@@ -301,7 +301,7 @@
                                 </button>
                             </form><hr><hr>
 	                        <!-------  END REAL PAYPAL ------>   
-
+ 
 	
 
                             <!-------  Real LiqPay Button ------>  
@@ -315,7 +315,7 @@
                                     'order_id'       => $thisOrder[0]->ord_uuid,
                                     'version'        => '3',
                                     'language'       => 'en',
-				                    'result_url'     => 'http://account93.zzz.com.ua/laravel_CPH/public/pay-or-fail?status=paymentSuccess', //URL в Вашем магазине на который покупатель будет переадресован после завершения покупки.
+				                    'result_url'     => env('LIQPAY_RETURN_URL', 'screw'), //'http://account93.zzz.com.ua/laravel_CPH/public/pay-or-fail?status=paymentSuccess', //URL в Вашем магазине на который покупатель будет переадресован после завершения покупки.
 				                    'server_url'     => '' //URL API в Вашем магазине для уведомлений об изменении статуса платежа (сервер->серв
                                 ));
 		                        echo $LiqPayButton;

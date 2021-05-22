@@ -17,28 +17,21 @@ use App\Http\Controllers\Controller;
 
 class ShopPayPalSimple_AdminPanel extends Controller
 {
-    
 	public function __construct(){
 		$this->middleware('auth');
-		/*if (!Auth::check()){
-			throw new \App\Exceptions\myException('You are not logged');
-		} */
-		
+        $this->middleware('\App\Http\Middleware\RbacMiddle::class'); //RBAC control => check if(!Auth::user()->hasRole('admin')
 	}
 	
 	
    /**
-    * display Admin Panel start page
+    * Display Admin Panel start page
     * @return \Illuminate\Http\Response
     *
     * 
     */
     public function index()
-    {
-		if(!Auth::user()->hasRole('admin')){ //arg $admin_role does not work
-            throw new \App\Exceptions\myException('You have No rbac rights to Admin Panel');
-		}
-		
+    {   
+		//RBAC middleware RbacMiddle goes here (via constructor)
 		return view('ShopPaypalSimple_AdminPanel.adminPanelMain'); 
 	}
 	
@@ -47,26 +40,22 @@ class ShopPayPalSimple_AdminPanel extends Controller
     //==================================  Orders view section =================================================	
     
     /**
-     * Displays Admin Panel Orders page
+     * Display Admin Panel Orders page
      * @return \Illuminate\Http\Response
      *
      * 
      */
     public function orders()
     {
-		//RBAC control
-		if(!Auth::user()->hasRole('admin')){ //arg $admin_role does not work
-            throw new \App\Exceptions\myException('You have No rbac rights to Admin Panel');
-		}
-	
-		
+		//RBAC middleware RbacMiddle goes here (via constructor)
+        
 		//if no $_GET['admOrderStatus'] - find all orders with {'ord_status', 'not-proceeded'} with pagination
 	    if(!isset($_GET['admOrderStatus'])){ 
 		    //Find all orders by where clause. Will engage hasMany in view
 		    $shop_orders_main = ShopOrdersMain::where('ord_status', 'not-proceeded')->orderBy('order_id', 'desc')->paginate(3);
 			
 		    //count all orders with {'ord_status', 'not-proceeded'}
-			$countOrders =  ShopOrdersMain::where('ord_status', 'not-proceeded')->get();    //for counting 
+		    $countOrders =  ShopOrdersMain::where('ord_status', 'not-proceeded')->get();    //for counting 
 		}
 		
 		
@@ -85,18 +74,25 @@ class ShopPayPalSimple_AdminPanel extends Controller
 		$countDelivered    = ShopOrdersMain::where('ord_status', 'delivered')->count();     //for counting 
 		
 		return view('ShopPaypalSimple_AdminPanel.orders')
-		    ->with(compact('shop_orders_main', 'countOrders', 'countProceeded', 'countNotProceeded', 'countDelivered')); 
+		    ->with(compact('shop_orders_main', 
+                           'countOrders', 
+                           'countProceeded', 
+                           'countNotProceeded', 
+                           'countDelivered')); 
 	}
 	
 	
 	
 	
    /**
-    * For ajax counting
+    * For ajax counting (used in public function index())
     * @return int $count
     * 
     */
-	public function countOrders(){
+	public function countOrders()
+    { 
+		//RBAC middleware RbacMiddle goes here (via constructor)
+        
 		$count = ShopOrdersMain::where('ord_status', 'not-proceeded')->count();
         if(!$count){
 			$count = 0;
@@ -109,7 +105,7 @@ class ShopPayPalSimple_AdminPanel extends Controller
 	
 	
 	/**
-     * method to update Order Status in AdminPanel, from {public function orders()}. (E.g  change from 'proceeded' to 'not-proceeded')
+     * Method to update Order Status in AdminPanel, gets $_POST from {public function orders()}. (E.g  change from 'proceeded' to 'not-proceeded'). Validation class
      * @param  \Illuminate\Http\OrderStatusChangeRequest  $request
      * @return \Illuminate\Http\Response
      *
@@ -117,23 +113,31 @@ class ShopPayPalSimple_AdminPanel extends Controller
 	 
     public function updateStatusField(OrderStatusChangeRequest $request)
 	{
+		//RBAC middleware RbacMiddle goes here (via constructor)
+        
 		//if $_POST['productID'] is not passed. In case the user navigates to this page by enetering URL directly, without submitting from with $_POST
 		if(!$request->input('u_orderID')){
 			throw new \App\Exceptions\myException('Bad request, You are not expected to enter this page.');
 		}
 		
-	    $orderID = $request->input('u_orderID');
+	    $orderID     = $request->input('u_orderID');
 		$orderStatus = $request->input('u_status');
 		
 		//check if user/admin wants to change the current Order status to the same value, e.g the status is 'proceeded' and admin wants change to the same 'proceeded;
 	    $OneOrder = ShopOrdersMain::where('order_id', $request->input('u_orderID'))->first(); 
 		
 		if($OneOrder->ord_status == $request->input('u_status')){
-		    return redirect()->back()->withInput()->with('flashMessageFailX', 'You tried to update Order <b>' . $orderID . ' </b> Status with the same value <b>' . ucfirst($orderStatus) . '</b>. It is unacceptable!!!' );
+		    return redirect()
+                   ->back()
+                   ->withInput()
+                   ->with('flashMessageFailX', 'You tried to update Order <b>' . $orderID . ' </b> Status with the same value <b>' . ucfirst($orderStatus) . '</b>. It is unacceptable!!!' );
 
 		} else { //it is OK to update
 			ShopOrdersMain::where('order_id', $request->input('u_orderID'))->update([  'ord_status' => $orderStatus ]);
-			return redirect()->back()->withInput()->with('flashMessageX', 'You successfully update Order <b>' . $orderID . ' </b> with new Status <b> ' . ucfirst($orderStatus) . '</b>' );
+			return redirect()
+                    ->back()
+                    ->withInput()
+                    ->with('flashMessageX', 'You successfully update Order <b>' . $orderID . ' </b> with new Status <b> ' . ucfirst($orderStatus) . '</b>' );
 		}
 	}
 	
@@ -151,22 +155,21 @@ class ShopPayPalSimple_AdminPanel extends Controller
 	
     /**
      * Display admin panel view with all shop products and option to edit, add new
-     * @param  
+     * 
      * @return \Illuminate\Http\Response
      *
      */
 	 
     public function products()
     {
-		if(!Auth::user()->hasRole('admin')){ //arg $admin_role does not work
-            throw new \App\Exceptions\myException('You have No rbac rights to Admin Panel');
-		}
+		//RBAC middleware RbacMiddle goes here (via constructor)
 		
 		$allProducts   = ShopSimple::paginate(7); //all shop products with pagination
 		$allCategories = ShopCategories::all();  //for <select> dropdown
 		$allProductsSearchBar = ShopSimple::all();  // for Search Bar
 		
-		return view('ShopPaypalSimple_AdminPanel.shop-products.shop-products-list')->with(compact('allProducts', 'allCategories', 'allProductsSearchBar'));  
+		return view('ShopPaypalSimple_AdminPanel.shop-products.shop-products-list')
+            ->with(compact('allProducts', 'allCategories', 'allProductsSearchBar'));  
 	}
 	
 	
@@ -181,17 +184,16 @@ class ShopPayPalSimple_AdminPanel extends Controller
 	 
     public function addProduct()
     {
-		if(!Auth::user()->hasRole('admin')){ //arg $admin_role does not work
-            throw new \App\Exceptions\myException('You have No rbac rights to Admin Panel');
-		}
+		//RBAC middleware RbacMiddle goes here (via constructor)
 		
 		$allCategories = ShopCategories::all();  //for <select> dropdown in form
 		
-		return view('ShopPaypalSimple_AdminPanel.shop-products.add-product')->with(compact('allCategories'));  
+		return view('ShopPaypalSimple_AdminPanel.shop-products.add-product')
+            ->with(compact('allCategories'));  
 	}
 	
 	
-	
+
 	
 	/**
      * Saves new product to DB. Gets $_POST[''] sent by form in {public function addProduct()}
@@ -203,9 +205,7 @@ class ShopPayPalSimple_AdminPanel extends Controller
 	 
     public function storeProduct(SaveNewProductRequest $request)
     {
-		if(!Auth::user()->hasRole('admin')){ //arg $admin_role does not work
-            throw new \App\Exceptions\myException('You have No rbac rights to Admin Panel');
-		}
+		//RBAC middleware RbacMiddle goes here (via constructor)
 		
 		//if $_POST['productID'] is not passed. In case the user navigates to this page by enetering URL directly, without submitting from with $_POST
 		if(!$request->input('product-desr')){
@@ -224,56 +224,45 @@ class ShopPayPalSimple_AdminPanel extends Controller
 		
 		//saving a new product data to table {shop_simple}
 		$data = $request->all(); 
-		$shop = new ShopSimple();
-		
-		$shop->shop_title      = $data['product-name'];
-		$shop->shop_descr      = $data['product-desr'];
-		$shop->shop_price      = $data['product-price'];
-		$shop->shop_image      = $imageName; //$request->image->getClientOriginalName();
-		$shop->shop_currency   = '$' ;
-		$shop->shop_categ      = $data['product-category'];
-		$shop->sh_device_type  = $data['product-type'];
-		$shop->shop_created_at = date('Y-m-d H:i:s');
-				
-		if($shop->save() ){
-			
-		    //saving qunatity to table {shop_quantity}. Must be transaction with $shop->save()
-		    $quant = new ShopQuantity();
-		    $quant->product_id   = $shop->shop_id;
-		    $quant->all_quantity = $data['product-quant'];
-			$quant->left_quantity = $data['product-quant']; // it is new, so qunatity is the same not ++
-		    $quant->all_updated   =  date('Y-m-d H:i:s');
-		    $quant->save();
-		   
-			if($quant->save()){
+		$model = new ShopSimple();
+        $save = $model->saveNewProduct($data, $imageName); 
+        
+		if($save['status'] == true){
+			$lastID = $save['savedID'];
+            
+            //saving qunatity to table {shop_quantity}. Must be transaction with $shop->save()
+            $modelQuant = new ShopQuantity();
+			if($modelQuant->saveNewQuantity($data, $lastID)){
 				
 	            return redirect('/admin-products')/*->withInput()*/
 		           ->with('flashMessageX', 'Validation was OK. Product<b> ' . $data['product-name'] .  ' </b> was saved to DB. Image was successfully uploaded. Image is <b> ' . $imageName  . '</b>. Size is ' . $sizeInByte . ' or ' . $sizeInKiloByte . '. Format is <b>' . $fileExtens . '</b>. Quantity ' . $data['product-quant'] . ' was loaded')
 		           ->with('image',$imageName);
-			}
+			} else {
+                return redirect('/admin-add-product')
+                   ->withInput()
+                   ->with('flashMessageFailX', 'Saving of Quantity Failed');
+            }
 			   
         } else {
-	        return redirect('/admin-add-product')->withInput()->with('flashMessageFailX', 'Saving Failed');
+	        return redirect('/admin-add-product')
+                ->withInput()
+                ->with('flashMessageFailX', 'Saving Failed');
 		}
 	}         
 	
 	
-	
-	
-	
+		
 	
     /**
      * Display one product view by ID
-     * @param  
+     * @param int $id  
      * @return \Illuminate\Http\Response
      *
      */
 	 
     public function showOneProduct($id)
     {
-		if(!Auth::user()->hasRole('admin')){ //arg $admin_role does not work
-            throw new \App\Exceptions\myException('You have No rbac rights to Admin Panel');
-		}
+	    //RBAC middleware RbacMiddle goes here (via constructor)
 		
 		//find the product by id
 		$productOne = ShopSimple::where('shop_id', $id)->get();
@@ -287,15 +276,13 @@ class ShopPayPalSimple_AdminPanel extends Controller
 	
 	/**
      * Display form to edit an existing product
-     * @param  
+     * @param int $id  
      * @return \Illuminate\Http\Response
      */
 	 
     public function editProduct($id)
     {
-	    if(!Auth::user()->hasRole('admin')){ //arg $admin_role does not work
-            throw new \App\Exceptions\myException('You have No rbac rights to Admin Panel');
-		}
+	    //RBAC middleware RbacMiddle goes here (via constructor)
 		
 		 //additional check in case user directly intentionally navigates to this URL with not-existing ID
 	    if (!ShopSimple::where('shop_id', $id)->exists()) { 
@@ -314,20 +301,16 @@ class ShopPayPalSimple_AdminPanel extends Controller
 	
 	/**
      * Delete a one product. Gets $_POST sent by form in function products()
-     * @param  
+     * @param Request $request 
      * @return \Illuminate\Http\Response
      */
 	 
     public function deleteProduct(Request $request)
     {
-		//Rbac works on Delete request
-		if(!Auth::user()->hasRole('admin')){ //arg $admin_role does not work
-            throw new \App\Exceptions\myException('You have No rbac rights to Admin Panel');
-		}
-		
+	    //RBAC middleware RbacMiddle goes here (via constructor)
+
 		//gets the id to delete
 		$deleteID = $request->input('prod_id');
-		
 		
 		//found image in 
 		$product = ShopSimple::where('shop_id', $deleteID )->first();
@@ -352,23 +335,25 @@ class ShopPayPalSimple_AdminPanel extends Controller
 		       ->with('flashMessageX', 'Deleted item <b> ' . $deleteID .  ' </b> successfully. ' . $s . '. Quantity removed from shop_quantity');
 			   
         } else {
-	        return redirect('/admin-products')->withInput()->with('flashMessageFailX', 'Deleting Failed');
+	        return redirect('/admin-products')
+                ->withInput()->with('flashMessageFailX', 'Deleting Failed');
 		}
 		
 	}
 	
 	
-	
+	//STOPPED HERE!!!!!!!!!!
 	
 	/**
-     * Add++ quantity to table {shop_quantity}. Gets <form> data from page {'/admin-edit-product/{id}'}) (function editProduct())
-     * @param  
+     * Add++ quantity to table {shop_quantity}.Handles $_POST request. Gets <form> data from page {'/admin-edit-product/{id}'}) (function editProduct())
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
 	 
     public function addStockQuantity(Request $request)
     {
-		
+		//RBAC middleware RbacMiddle goes here (via constructor)
+
 		//if $_POST['product-quant'] is not passed. In case the user navigates to this page by enetering URL directly, without submitting from with $_POST
 		if(!$request->input('product-quant')){
 			throw new \App\Exceptions\myException('Bad request, You are not expected to enter this page.');
@@ -412,15 +397,5 @@ class ShopPayPalSimple_AdminPanel extends Controller
 
 	}
 	//================================== END Products view section =================================================
-	
-	
 
-	
-	
-	
-	
-	
-	
-	
-	
 }

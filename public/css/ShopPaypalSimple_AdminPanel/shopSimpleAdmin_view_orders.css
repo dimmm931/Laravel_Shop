@@ -6,7 +6,6 @@
 }
 
 
-
 /* -------------------------------- Mobile */
 @media screen and (max-width: 480px) { 
     .fit-content { width: fit-content;}  /*DO NOT stretch the width of div with orders table over the page visibility  */
