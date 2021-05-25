@@ -104,7 +104,8 @@
 					    </div>
 	                @else 
 						
-
+                        
+                        
 					    <!------------  CART Products List ------------->
                         <div class="row shop-items"><hr>
 	                        <div class="col-sm-12 col-xs-12 shadowX"><h3>You have <?=count($_SESSION['cart_dimmm931_1604938863']);?> items to Check-out</h3></div>
@@ -195,24 +196,15 @@
 		                        <h2 id="finalSum"> {{ $totalSum }}  {{$inCartItems[$keyN]['shop_currency']}}</h2><hr> <!-- ₴ -->
 	                        </div>
 	 
-	                        <!--  getting Order detail from $input passed from {function pay1} -->
-                            <div class="col-sm-12 col-xs-12 shadowX">
-	                            <hr>
-	                            <p> Order Id <i class="fa fa-check-square-o"></i>  {{ $input['u_uuid']   }}   </p>
-	                            <h3> Shipping details (from passed Input)</h3> 
-		                        <p> <i class="fa fa-address-card-o"></i>  {{ $input['u_name']    }}   </p>
-		                        <p> <i class="fa fa-archive"></i>         {{ $input['u_email']   }}   </p>
-		                        <p> <i class="fa fa-arrows"></i>          {{ $input['u_address'] }}   </p>
-		                        <p> <i class="fa fa-bell-o"></i>          {{ $input['u_phone']   }}   </p>
-	                        </div>
-	  
+	                     
 	  
 	                        <!--  getting Order detail from DB by ID {$savedID} passed from {function pay1} -->
 	                        <div class="col-sm-12 col-xs-12 shadowX">
 	                            <hr>
 	                            <p> Order Id <i class="fa fa-check-square-o"></i>  {{ $thisOrder[0]->ord_uuid }}   </p>
-	                            <h3> Shipping details (from SQL order) </h3>
-                                <p>Data retrieved from DB by passed from {function pay1}Order ID savedID</p>		  
+	                            <h3> Shipping details </h3>
+                                <p></p><hr>
+                                <!--<p>Data retrieved from DB by passed from {function pay1}Order ID savedID</p>-->		  
 		                        <p> <i class="fa fa-address-card-o"></i>  {{ $thisOrder[0]->ord_name   }}   </p>
 		                        <p> <i class="fa fa-archive"></i>         {{ $thisOrder[0]->ord_email   }}   </p>
 		                        <p> <i class="fa fa-arrows"></i>          {{ $thisOrder[0]->ord_address }}   </p>
@@ -257,7 +249,7 @@
 				                            <div class="col-sm-12 col-xs-12">
 				                                <div class="col-sm-4 col-xs-3">  {{$x->items_quantity}} <span class="hidden-xs">pcs</span>  </div> <!-- .hidden-xs = visible in desktop only -->
 					                            <div class="col-sm-4 col-xs-4">  {{$x->item_price}} ₴       </div> 
-					                            <div class="col-sm-4 col-xs-5">  {{ $x->items_quantity * $x->item_price }} ₴ </div> {{-- quantity * price = sum  --}} <!-- hasOne --> 
+					                            <div class="col-sm-4 col-xs-5">  {{$x->items_quantity * $x->item_price }} ₴ </div> {{-- quantity * price = sum  --}} <!-- hasOne --> 
 		                                        <hr>
 				                            </div>
 				  

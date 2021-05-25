@@ -55,7 +55,7 @@ class ShopTimelineProgress2
                     <!-- Payment icon -->				
 				    <div class="icon-item <?php echo ($activeClass == 'Payment' ? 'myactive' : 'myinactive'); ?> "> <!-- assign css class by function argument {$activeClass} -->	
 				        <i class="fa fa-cc-mastercard" style="font-size:24px;"></i>
-					    <p>Payment</p>
+					    <p><a href="<?=route('/payPage2')?>">Payment</a></p>
 				    </div>
 				
 				    <!-- A line  -->

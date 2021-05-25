@@ -145,7 +145,7 @@ if (isset($_SESSION['cart_dimmm931_1604938863']) && isset($_SESSION['cart_dimmm9
 				    <form method="post" class="form-assign" action="{{url('/addToCart')}}">
 					    <input type="hidden" value="{{csrf_token()}}" name="_token"/>
 					    <input type="hidden" value="{{$allDBProducts[$i]['shop_id']}}" name="productID" />
-					    </br><input onclick="alert('Not implemented yet.Add to cart');return false;" type="submit" class="btn btn-primary shadowX rounded" value="Buy in one click"/>
+					    </br><input onclick="alert('Not implemented yet. Add to cart');return false;" type="submit" class="btn btn-primary shadowX rounded" value="Buy in one click"/>
 				    </form>
 				    <!-- end New form (with button "Buy in one click")-->
 			    </div>		  

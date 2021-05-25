@@ -1,6 +1,7 @@
 <?php
 //show checkout page. CheckOut == Order. Shows selected products + Shipping form (address, phone etc). User has an option to login/register or proceed unlogged
-//uses $_SESSION['cart_dimmm931_1604938863'] to store and retrieve user's cart; Format is { [8]=> int(3) [1]=> int(2) [4]=> int(1) }
+//uses $_SESSION['cart_dimmm931_1604938863'] to store and retrieve user's cart; Format is { [8]=> int(3) [1]=> int(2) [4]=> int(1) }//uses $_SESSION['orderID_1604938863'] to store user's Order ID (stores table 'shop_orders_main' increment ID, not UUID)
+
 ?>
 
 @extends('layouts.app')
@@ -88,8 +89,20 @@
 	                    {!! \App\Http\MyHelpers\ShopSimple\ShopTimelineProgress2::showProgress2("Order") !!}
 					</div>
 	                <!--------------  END  Progress Status Icons by component ----------------->
-					  
 					
+                    
+                    <!-- If order has been planted already and user comes back to this page -->
+                    @if (isset($_SESSION['cart_dimmm931_1604938863']))
+                        <div class="col-sm-12 col-xs-12 alert alert-danger"> <br><br>
+                            <center>
+				                <h3> Your order already exist. Want to override? If not, proceed to 
+                                    <p><hr><a href="<?=route('/payPage2')?>"> Payment <i class="fa fa-cc-mastercard" style="font-size:24px;"></i></a></p>
+		                        </h3>
+                            </center>
+					    </div>    
+					@endif
+                    
+                    <!-- If cart is empty -->
 					@if (!isset($_SESSION['cart_dimmm931_1604938863']) || (count($_SESSION['cart_dimmm931_1604938863']) == 0) )
 		                <div class="col-sm-12 col-xs-12"> <br><br><br><center>
 				        <h2> So far there is nothing to check=out  </h2>
@@ -272,7 +285,7 @@
                                         <div class="form-group">
                                             <div class="col-md-8 col-md-offset-4">
                                                 <button type="submit" class="btn btn-primary shadowX submitX rounded"> Done </button>
-						                        <span class='small font-italic text-danger' >You have to clear the Cart here as well</span>
+						                        <span class='small font-italic text-danger' ></span>
 			                                </div>
 				                        </div>
 		      

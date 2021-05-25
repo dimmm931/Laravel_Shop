@@ -1,5 +1,6 @@
 <?php
 //uses $_SESSION['cart_dimmm931_1604938863'] to store and retrieve user's cart;
+//uses $_SESSION['orderID_1604938863'] to store user's Order ID (stores table 'shop_orders_main' increment ID, not UUID)
 ?>
 @extends('layouts.app')
 

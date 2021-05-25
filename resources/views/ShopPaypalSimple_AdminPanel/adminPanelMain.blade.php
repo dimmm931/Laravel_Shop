@@ -11,6 +11,13 @@
 <div id="all" class="container animate-bottom">
     <div class="row">
         <div class="col-sm-12 col-xs-12">
+            
+            <!-- Message if any unpaid orders older < 24 hours were deleted-->
+            <div class="alert alert-success"> 
+                {!! $message !!} <!--  html unescapped tags -->
+            </div>
+            
+            
             <div class="panel panel-default xo">
 			
 			    <!-- Flash message if Success -->
@@ -43,7 +50,7 @@
                 @endif
                 <!-- End Display form validation errors var 2 -->				
 					
-					
+                	
                 <div class="panel-heading text-warning">
 				    Shop PayPal Admin Panel <span class="small text-danger">*</span> 
 				</div>

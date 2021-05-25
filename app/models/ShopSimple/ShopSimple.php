@@ -153,7 +153,7 @@ class ShopSimple extends Model
     
     /**
      * Method to read cart $_SESSION['cart_dimmm931_1604938863'], e.g [5,7,9] and find relevant products in DB
-     * @return collection
+     * @return array $inCartItems
      *
      * 
      */

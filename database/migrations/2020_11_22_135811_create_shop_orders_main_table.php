@@ -42,8 +42,9 @@ class CreateShopOrdersMainTable extends Migration
 			
 			//payment
 			$table->enum('if_paid', ['0', '1', ])->default('0')->comment = 'If user paid the order'; //Эквивалент ENUM для базы данных
-            $table->integer('payment_id')->nullable()->comment = 'If paid Paypal etc payment ID';  //product Id from table {shop_simple}
-			
+            $table->integer('payment_id')->nullable()->comment = 'If paid Paypal etc, payment ID';  //product Id from table {shop_simple}
+			$table->timestamp('when_paid')->nullable()->comment = 'when user paid'; //	Эквивалент TIMESTAMP для базы данных
+
 			//delivery type
             $table->enum('delivery', ['mail', 'self-take', ])->default('mail'); //Эквивалент ENUM для базы данных
 

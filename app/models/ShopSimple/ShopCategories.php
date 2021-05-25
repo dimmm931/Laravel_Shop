@@ -8,12 +8,12 @@ class ShopCategories extends Model
 {
 
 
-  /**
-   * Connected DB table name.
-   *
-   * @var string
-   */
-  protected $table = 'shop_categories';
+   /**
+    * Connected DB table name.
+    *
+    * @var string
+    */
+    protected $table = 'shop_categories';
   
   
 }

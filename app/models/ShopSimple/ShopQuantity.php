@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class ShopQuantity extends Model
 {
  
-
   /**
    * Connected DB table name.
    *
@@ -40,6 +39,5 @@ class ShopQuantity extends Model
             return false;
         }
     }
-  
   
 }

@@ -1,7 +1,15 @@
 {
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
-    "/js/rbac/my-rbac.js": "/js/rbac/my-rbac.js",
     "/js/login/login.js": "/js/login/login.js",
+    "/js/ShopPaypalSimple_Admin/ajax_count_orders_quantity.js": "/js/ShopPaypalSimple_Admin/ajax_count_orders_quantity.js",
+    "/js/ShopPaypalSimple_Admin/ViewOrders/adminOrders.js": "/js/ShopPaypalSimple_Admin/ViewOrders/adminOrders.js",
+    "/js/ShopPaypalSimple_Admin/Products/product_tabs.js": "/js/ShopPaypalSimple_Admin/Products/product_tabs.js",
+    "/js/ShopPaypalSimple/shopSimple_Loader.js": "/js/ShopPaypalSimple/shopSimple_Loader.js",
+    "/js/ShopPaypalSimple/shopSimple.js": "/js/ShopPaypalSimple/shopSimple.js",
+    "/js/ShopPaypalSimple/my_LazyLoad_Shop_Simple.js": "/js/ShopPaypalSimple/my_LazyLoad_Shop_Simple.js",
+    "/js/ShopPaypalSimple/cart.js": "/js/ShopPaypalSimple/cart.js",
+    "/js/ShopPaypalSimple/autocomplete.js": "/js/ShopPaypalSimple/autocomplete.js",
+    "/js/ShopPaypalSimple/LazyLoad/jquery.lazyload.js": "/js/ShopPaypalSimple/LazyLoad/jquery.lazyload.js",
     "/css/my_css.css": "/css/my_css.css"
 }

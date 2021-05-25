@@ -5,6 +5,7 @@ namespace App\models\ShopSimple;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class ShopOrdersMain extends Model
 {
@@ -52,11 +53,23 @@ class ShopOrdersMain extends Model
      * @return HasMany
      *
      */
-	 public function orderDetail()
-        {
-          //return $this->hasMany('App\models\ShopSimple\ShopOrdersItems', 'order_id','order_id');
-		  //return $this->hasMany('App\models\ShopSimple\ShopOrdersItems', 'fk_order_id','order_id'); //->withDefault(['fk_order_id' => 'Unknown']);  //return $this->belongsTo('App\modelName', 'parent_id_this_table', 'foreign_key_that_table');
-          //return $this->hasOne('App\models\ShopSimple\ShopOrdersItems', 'fk_order_id', 'order_id' );
-		  return $this->hasMany('App\models\ShopSimple\ShopOrdersItems', 'fk_order_id', 'order_id');//->withDefault(['fk_order_id' => 'Unknown']);
-        }
+	public function orderDetail()
+    {
+		return $this->hasMany('App\models\ShopSimple\ShopOrdersItems', 'fk_order_id', 'order_id');//->withDefault(['fk_order_id' => 'Unknown']);
+    }
+    
+    
+    
+    /**
+     * Method to delete unPaid orders from table {shop_orders_main} which are older than 24 hours. Used in admin panel
+     * @return collection $deleteItems
+     *
+     */
+	public function deleteOldOrders()
+    {
+        $yesterday = Carbon::now()->subDays(1)->toDateTimeString(); //2021-05-23 14:37:08"
+        $deleteItems = ShopOrdersMain::where('if_paid', '0')->where('ord_placed', '<=', $yesterday)->get();  //get for foreach
+        ShopOrdersMain::where('if_paid', '0')->where('ord_placed', '<=', $yesterday)->delete(); //delete where older than yesterday
+        return $deleteItems;    
+    }
 }

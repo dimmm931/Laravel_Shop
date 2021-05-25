@@ -14,6 +14,7 @@ use App\Http\Requests\ShopPaypalSimple_AdminPanel\OrderStatusChangeRequest; //my
 use App\Http\Requests\ShopPaypalSimple_AdminPanel\SaveNewProductRequest; //my custom Form validation via Request Class (to create a new product in table {shop_simple})
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
+//use Carbon\Carbon;
 
 class ShopPayPalSimple_AdminPanel extends Controller
 {
@@ -32,7 +33,17 @@ class ShopPayPalSimple_AdminPanel extends Controller
     public function index()
     {   
 		//RBAC middleware RbacMiddle goes here (via constructor)
-		return view('ShopPaypalSimple_AdminPanel.adminPanelMain'); 
+        
+        //delete unPaid orders from table {shop_orders_main} which are older than 24 hours
+        $model = new ShopOrdersMain();
+        $delete = $model->deleteOldOrders();
+        
+        //delete delete relevant rows in table {order_item} when u delete something in table {shop_orders_main}
+        $model2 = new ShopOrdersItems();
+        $message = $model2->deleteRelevantItemsFrom_Order_item($delete);
+        
+		return view('ShopPaypalSimple_AdminPanel.adminPanelMain')
+            ->with(compact('message'));        
 	}
 	
 
@@ -342,12 +353,12 @@ class ShopPayPalSimple_AdminPanel extends Controller
 	}
 	
 	
-	//STOPPED HERE!!!!!!!!!!
 	
 	/**
      * Add++ quantity to table {shop_quantity}.Handles $_POST request. Gets <form> data from page {'/admin-edit-product/{id}'}) (function editProduct())
      * @param Request $request
      * @return \Illuminate\Http\Response
+     *
      */
 	 
     public function addStockQuantity(Request $request)

@@ -1,11 +1,9 @@
 
 ## Laravel Shop.
-
-- <p>Zizaco/Entrust is a succinct and flexible way to add Role-based Permissions to Laravel</p>
 - <p>To run the application on <b>http://localhost</b>, copy the repository code and run <b>composer install</b> to load all dependencies. </p>
-- <p>Create root file <b>.env</b> with your DB seetings based on  <b>.env.example</b>. Don't forget to add <b>LIQPAY_PUBLIC_KEY</b>, <b>LIQPAY_PRIVATE_KEY</b> and <b>LIQPAY_RETURN_URL</b> to enable on-line payment. In order to enable PayPal payment, additionally add <b>PAYPAL_PAYNOW_BUTTON_URL</b>, <b>PAYPAL_RECEIVER_EMAIL</b> and <b>PAYPAL_RETURN_URL</b>   </p>
+- <p>Create root file <b>.env</b> with your DB seetings based on  <b>.env.example</b>. Add <b>LIQPAY_PUBLIC_KEY</b>, <b>LIQPAY_PRIVATE_KEY</b> and <b>LIQPAY_RETURN_URL</b> credentials to enable Liqpay on-line payment. In order to enable PayPal payment, additionally add <b>PAYPAL_PAYNOW_BUTTON_URL</b>, <b>PAYPAL_RECEIVER_EMAIL</b> and <b>PAYPAL_RETURN_URL</b> </p>
 - <p>Run <b> php artisan key:generate </b> </p>
-- <p>Then use <b> php artisan migrate </b> to migrate databases</p>
+- <p>Use <b> php artisan migrate </b> to migrate databases</p>
 - <p>If Entrust migration did not run automatically, run additional command  <b> php artisan entrust:migration </b> to generate the Entrust migration</p>
 - <p>When the migration is completed, run the seeding command <b> php artisan db:seed </b> to seed the dummy data, after you may login using login: <b>test@gmail.com</b>, password: <b>testtest</b>. </p>
 - <p>Js assets are minified and concatenated with Laravel Mix, source code is in <b>/resources/assets</b>, to manage JS dependencies run <b>npm install</b>, to minify js files run <b>npm run production</b>, to automate your build when there is any change use <b>npm run watch </b></p>
@@ -63,13 +61,17 @@
 
 ![Screenshot](public/images/Screenshots/15.png)
 
-## Admin Panel (amount of new orders is updated via ajax)
-
-![Screenshot](public/images/Screenshots/20.png)
-
 ## Admin Panel protected with Entrust RBAC
 
 ![Screenshot](public/images/Screenshots/21.png)
+
+## Admin Panel (count for new orders is updated via ajax)
+
+![Screenshot](public/images/Screenshots/20.png)
+
+## Unpaid orders older than 24 hours are deleted automatically from Admin panel
+
+![Screenshot](public/images/Screenshots/20a.png)
 
 ## Admin Panel - View all products with option to delete, edit or add new
 
@@ -81,7 +83,7 @@
 
 ## Admin Panel - Edit a product
 
-![Screenshot](public/images/Screenshots/24.png
+![Screenshot](public/images/Screenshots/24.png)
 
 ## Admin Panel - Edit a product quantity in stock
 
